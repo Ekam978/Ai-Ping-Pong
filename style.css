@@ -23,6 +23,20 @@ body
 }
 
 canvas{
-    margin-bottom: 20px;
     border-radius: 20px;
+}
+
+.instructions{
+    display: inline;
+    width: 45%;
+}
+
+.modal-dialog{
+    width: 90%;
+}
+
+h4{
+    background-color: whitesmoke;
+    line-height: 2;
+    margin: 0px;
 }
