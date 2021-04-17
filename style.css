@@ -23,7 +23,13 @@ body
 }
 
 canvas{
+    border: 3px solid white;
     border-radius: 20px;
+    box-shadow: white 1px 1px 18px;
+}
+video{
+    border-radius: 20px;
+
 }
 
 .instructions{
