@@ -1,6 +1,7 @@
 rightWristX = 0;
 rightWristY = 0;
 rightWristScore = 0;
+game_status = "";
 
 /*created by prashant shukla */
 
@@ -48,52 +49,54 @@ function gotPoses(results) {
 }
 function startGame(){
   game_status = "start";
-  document.getElementById("status").innerHTML = "Game Is Loading";
+  document.getElementById("status").innerHTML = "Game Is Loaded";
 }
 function draw(){
-  background(0); 
- image(video,0,0,700,600);
- 
- fill("black");
- stroke("black");
- rect(680,0,20,700);
-
- fill("black");
- stroke("black");
- rect(0,0,20,700);
- if (rightWristScore > 0.2) {
-  fill("red");
-  stroke("red");
-  circle(rightWristX,rightWristY,20);
- }
- paddleInCanvas();
-
-   //funtion paddleInCanvas call 
-   //left paddle
-   fill(250,0,0);
-    stroke(0,0,250);
-    strokeWeight(0.5);
-   paddle1Y = rightWristY; 
-   rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
-   
-   
-    //pc computer paddle
-    fill("#FFA500");
-    stroke("#FFA500");
-   var paddle2y =ball.y-paddle2Height/2;  
-   rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
+  if (game_status == "start") {
+    background(0); 
+    image(video,0,0,700,600);
     
-    //function midline call
-    midline();
-    
-    //funtion drawScore call 
-   drawScore();
+    fill("black");
+    stroke("black");
+    rect(680,0,20,700);
    
-   //function models call  
-   models();
+    fill("black");
+    stroke("black");
+    rect(0,0,20,700);
+    if (rightWristScore > 0.2) {
+     fill("red");
+     stroke("red");
+     circle(rightWristX,rightWristY,20);
+    }
+    paddleInCanvas();
    
-   //function move call which in very important
-    move();
+      //funtion paddleInCanvas call 
+      //left paddle
+      fill(250,0,0);
+       stroke(0,0,250);
+       strokeWeight(0.5);
+      paddle1Y = rightWristY; 
+      rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
+      
+      
+       //pc computer paddle
+       fill("#FFA500");
+       stroke("#FFA500");
+      var paddle2y =ball.y-paddle2Height/2;  
+      rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
+       
+       //function midline call
+       midline();
+       
+       //funtion drawScore call 
+      drawScore();
+      
+      //function models call  
+      models();
+      
+      //function move call which in very important
+       move();
+  }
 }
 
 
