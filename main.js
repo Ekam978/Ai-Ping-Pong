@@ -1,7 +1,3 @@
-rightWristX = 0;
-rightWristY = 0;
-rightWristScore = 0;
-game_status = "";
 
 /*created by prashant shukla */
 
@@ -16,6 +12,7 @@ var paddle1Y;
 var  playerscore =0;
 var audio1;
 var pcscore =0;
+
 //ball x and y and speedx speed y and radius
 var ball = {
     x:350/2,
@@ -24,13 +21,25 @@ var ball = {
     dx:3,
     dy:3
 }
+rightWristX = 0;
+rightWristY = 0;
+rightWristScore = 0;
+
+game_status = "";
+
+function preload() {
+  win = loadSound("ball_touch_paddel.wav");
+  lose = loadSound("missed.wav");
+}
 
 function setup(){
   var canvas =  createCanvas(700,600);
   canvas.parent('canvas');
+
   video = createCapture(VIDEO);
   video.size(700,600);
   video.hide();
+
   posenet = ml5.poseNet(video,modelLoaded);
   posenet.on('pose' , gotPoses);
 }
@@ -49,10 +58,9 @@ function gotPoses(results) {
 }
 function startGame(){
   game_status = "start";
-  document.getElementById("status").innerHTML = "Game Is Loaded";
+  document.getElementById("status").innerHTML = "Game Is Loading";
 }
 function draw(){
-  if (game_status == "start") {
     background(0); 
     image(video,0,0,700,600);
     
@@ -63,11 +71,14 @@ function draw(){
     fill("black");
     stroke("black");
     rect(0,0,20,700);
-    if (rightWristScore > 0.2) {
-     fill("red");
-     stroke("red");
-     circle(rightWristX,rightWristY,20);
-    }
+
+  if (rightWristScore > 0.2) {
+    fill("red");
+    stroke("red");
+    circle(rightWristX,rightWristY,30);
+   }
+  if (game_status == "start") {
+    document.getElementById("status").innerHTML = "Game Is Loaded";
     paddleInCanvas();
    
       //funtion paddleInCanvas call 
@@ -149,10 +160,12 @@ function move(){
   if (ball.x-2.5*ball.r/2< 0){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5; 
+    win.play();
   }
   else{
     pcscore++;
     reset();
+    lose.play();
     navigator.vibrate(100);
   }
 }
@@ -162,9 +175,9 @@ if(pcscore ==4){
     rect(0,0,width,height-1);
     fill("white");
     stroke("white");
-    textSize(25)
+    textSize(25);
     text("Game Over!☹☹",width/2,height/2);
-    text("Reload The Page!",width/2,height/2+30)
+    text("Restart the game!",width/2,height/2+30)
     noLoop();
     pcscore = 0;
 }
@@ -193,4 +206,8 @@ function paddleInCanvas(){
   if(mouseY < 0){
     mouseY =0;
   }  
+}
+function restart() {
+  pcscore = 0;
+  lose.play();
 }
